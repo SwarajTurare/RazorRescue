@@ -1,28 +1,121 @@
-# RazorRescue 2.0 — Modern Full-Stack Architecture
+# RazorRescue
 
-RazorRescue is an AI revenue-recovery operations platform for detecting failed/revenue-at-risk payments, selecting bounded interventions, protecting customers with compliance gates, and recording measurable recovery outcomes.
+## AI Revenue Recovery Operations Platform
+
+RazorRescue is a full-stack AI revenue-recovery platform that helps merchants detect revenue at risk, diagnose payment failures, choose bounded recovery actions, communicate with customers, and maintain an auditable recovery trail.
+
+### Core Loop
+
+> **Detect → Diagnose → Decide → Communicate → Recover → Audit**
+
+The platform covers failed payments, authentication failures, expired cards, checkout abandonment, insufficient funds, overdue receivables, promise-to-pay commitments, compliance suppression, recovery links, regional voice, batch recovery, and ROI analysis.
+
+---
+
+## Key Features
+
+### Executive Recovery Dashboard
+- Revenue at risk and recovered
+- Recovery yield
+- Penalties saved
+- Revenue leakage analysis
+- Recovery trend charts
+- Live transaction stream
+
+### AI Triage Studio
+- Transaction-level diagnosis and root-cause analysis
+- Bounded intervention selection
+- Quiet-hour and HITL safety gates
+- Multilingual customer communication
+- Regional voice generation
+- WhatsApp recovery draft
+- Payment/retry URL
+- QR-based payment recovery
+- Dynamic customer phone number
+
+### Batch Recovery
+- Process multiple failed transactions
+- Recovery outcome tracking
+- Monte Carlo analysis
+- Naive vs RazorRescue benchmarking
+- HITL and suppression handling
+- Penalty/bounce-fee savings analysis
+
+### Promise-to-Pay
+- PTP commitment detection
+- UTR identification
+- Dispute detection
+- Conversational payment-intent analysis
+
+### Compliance
+- Stop-rule evaluation
+- Opt-out detection
+- Persistent do-not-contact registry
+- Recovery blocking for suppressed customers
+
+### Audit Ledger
+- Persistent recovery history
+- Transaction-level audit records
+- Confidence and intervention tracking
+- Read-only SQL analytics
+- Executive PDF export
+
+### ROI Calculator
+- Monthly revenue at risk
+- Monthly recovery opportunity
+- Annual revenue at risk
+- Annual recovery opportunity
+
+---
 
 ## Architecture
 
-```text
-React + Vite + Tailwind + Chart.js + GSAP + Lenis
-                    │
-                  REST
-                    ▼
-          Node.js + Express API
-          ┌─────────┴─────────┐
-          ▼                   ▼
-       SQLite            Python FastAPI
-      audit/data         LangGraph + Groq
-                           PTP / voice / i18n
-```
+![Architecture_Img](RazorRescue_Modern_WarmTheme_Final/RazorRescue_Final/frontend/src/assets/RazorRescue_Architecture.jpg)
 
-The migration preserves the original Python recovery decision engine and LangGraph workflow rather than replacing it with a mock frontend.
+### Responsibilities
 
-## Stack
+**Frontend**
+- Merchant workspace UI
+- Routing and responsive layouts
+- Charts and visualizations
+- Animations and smooth scrolling
+- QR rendering
+- Audio playback
+- Notifications/toasts
+
+**Node.js / Express**
+- REST API
+- Transaction and dashboard data
+- Recovery orchestration
+- Compliance and suppression
+- Audit operations
+- Analytics and ROI
+- Communication with the AI service
+
+**Python / FastAPI**
+- LangGraph recovery workflow
+- Recovery decision logic
+- Customer-message generation
+- Localization
+- PTP analysis
+- Compliance evaluation
+- Voice synthesis
+- Razorpay payment-link generation
+- PDF reporting
+
+**SQLite**
+- Persistent recovery/audit records
+- Compliance suppression records
+- Local transaction/recovery data
+
+---
+
+## Technology Stack
 
 ### Frontend
-- React + Vite + JavaScript
+- React
+- Vite
+- JavaScript
 - Tailwind CSS
 - React Router
 - Chart.js / react-chartjs-2
@@ -30,145 +123,170 @@ The migration preserves the original Python recovery decision engine and LangGra
 - Lenis
 - React Toastify
 - Lucide React
+- qrcode.react
 
 ### Backend
-- Node.js + Express
-- SQLite via Node built-in `node:sqlite`
-- REST JSON API
-- Read-only validated audit query endpoint
+- Node.js 22+
+- Express
+- REST API
+- SQLite via Node's built-in `node:sqlite`
+- Repository/service architecture
 
-### AI service
-- Python + FastAPI
+### AI Service
+- Python 3.11+
+- FastAPI
 - LangGraph
 - Groq
-- deep-translator
-- Sarvam/gTTS integration preserved
-- Razorpay integration preserved
-- FPDF2
+- `deep-translator`
+- Sarvam integration
+- gTTS fallback
+- Razorpay integration
+- FPDF/FPDF2
+
+---
+
+## Project Structure
+
+```text
+RazorRescue_Final/
+├── frontend/
+│   └── src/
+│       ├── components/
+│       │   ├── charts/
+│       │   ├── layout/
+│       │   └── ui/
+│       ├── hooks/
+│       ├── pages/
+│       │   ├── Home.jsx
+│       │   ├── Dashboard.jsx
+│       │   ├── TriageStudio.jsx
+│       │   ├── BatchRecovery.jsx
+│       │   ├── PromiseToPay.jsx
+│       │   ├── Compliance.jsx
+│       │   ├── AuditLedger.jsx
+│       │   ├── ROICalculator.jsx
+│       │   └── RecoveryDemo.jsx
+│       ├── services/
+│       │   └── api.js
+│       ├── App.jsx
+│       ├── index.css
+│       └── main.jsx
+│
+├── backend/
+│   └── src/
+│       ├── config/
+│       ├── controllers/
+│       ├── database/
+│       ├── integrations/
+│       ├── middleware/
+│       ├── repositories/
+│       ├── routes/
+│       ├── services/
+│       ├── utils/
+│       ├── app.js
+│       └── server.js
+│
+├── ai-service/
+│   └── app/
+│       ├── agents/
+│       │   └── graph_agent.py
+│       ├── models/
+│       ├── routes/
+│       ├── services/
+│       │   ├── ai_messenger.py
+│       │   ├── core_logic.py
+│       │   ├── language_utils.py
+│       │   ├── pdf_generator.py
+│       │   ├── razorpay_utils.py
+│       │   └── voice_utils.py
+│       └── main.py
+│
+├── data/
+│   ├── failed_payments.csv
+│   └── recovery_ledger.db
+│
+└── scripts/
+    ├── start_ai_windows.bat
+    ├── start_backend_windows.bat
+    └── start_frontend_windows.bat
+```
+
+---
 
 ## Data
 
-- `data/failed_payments.csv` — existing failed-payment dataset
-- `data/recovery_ledger.db` — existing SQLite audit ledger, retained
+### Failed-payment dataset
 
-## Running locally
-
-### 1. AI service
-
-```bash
-cd ai-service
-python -m venv .venv
-# Windows: .venv\\Scripts\\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-Windows CMD: copy .env.example .env
-# PowerShell: Copy-Item .env.example .env
-uvicorn app.main:app --reload --port 8001
+```text
+data/failed_payments.csv
 ```
 
-### 2. Backend
+Provides transaction-level inputs used by the dashboard and recovery workflows.
 
-```bash
-cd backend
-npm install
-Windows CMD: copy .env.example .env
-# PowerShell: Copy-Item .env.example .env
-npm run dev
+### Recovery audit ledger
+
+```text
+data/recovery_ledger.db
 ```
 
-### 3. Frontend
+Stores persistent recovery and audit events used by the dashboard, Audit Ledger, and reporting workflows.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+The existing SQLite database is retained in the current architecture.
 
-Open `http://localhost:5173`.
+---
 
-## Environment variables
+## Local Setup
 
-Private credentials belong only in `ai-service/.env`:
+### Prerequisites
 
-- `GROQ_API_KEY`
-- `SARVAM_API_KEY`
-- `RAZORPAY_KEY_ID`
-- `RAZORPAY_KEY_SECRET`
+Install the following:
 
-Backend configuration lives in `backend/.env`.
+- Node.js 22+
+- npm
+- Python 3.11+
+- Git
+- Modern web browser
 
-Frontend may optionally use `frontend/.env` with `VITE_API_BASE_URL=http://localhost:4000/api`.
+Use three terminals for local development.
 
-## Routes
+### 1. AI Service
 
-- `/` — product home / kinetic visual landing page
-- `/dashboard` — executive recovery dashboard
-- `/triage` — single-customer AI triage studio
-- `/batch-recovery` — batch recovery orchestrator + Monte Carlo + benchmark
-- `/promise-to-pay` — PTP and dispute handling
-- `/compliance` — suppression and opt-out controls
-- `/audit-ledger` — audit ledger, query, and PDF export
-- `/roi-calculator` — merchant business-case calculator
+#### Windows Command Prompt
 
-## Moving blended background
-
-The home page includes an original kinetic gradient system inspired by the visual idea of modern lyrics experiences: multiple blurred color fields move slowly, remain behind the content, and support optional audio-reactive scaling using the Web Audio API. No third-party Spicy Lyrics assets are copied.
-
-The component is `frontend/src/components/layout/KineticBackground.jsx` and can be reused anywhere. Pass a ref to an HTML `<audio>` element to enable audio-reactive pulsing.
-
-## Responsive strategy
-
-Mobile-first layout was used throughout. The shell/navigation, metric cards, charts, forms, and data tables adapt for mobile, tablet, laptop, and large desktop resolutions. Reduced-motion preferences are respected.
-
-## Design system
-
-Reference palette from the supplied design direction:
-
-- Primary blue: `#45B5E7`
-- Accent magenta: `#B24D9C`
-- Background: `#151517`
-- White: `#FFFFFF`
-
-The interface intentionally avoids excessive emoji, decorative noise, or copy-heavy cards. Icons use Lucide React for consistency.
-
-## Migration mapping
-
-| Original | Modern location |
-|---|---|
-| `core_logic.py` | `ai-service/app/services/core_logic.py` |
-| `graph_agent.py` | `ai-service/app/agents/graph_agent.py` |
-| `ai_messenger.py` | `ai-service/app/services/ai_messenger.py` |
-| `language_utils.py` | `ai-service/app/services/language_utils.py` |
-| `voice_utils.py` | `ai-service/app/services/voice_utils.py` |
-| `razorpay_utils.py` | `ai-service/app/services/razorpay_utils.py` |
-| `pdf_generator.py` | `ai-service/app/services/pdf_generator.py` |
-| Streamlit views | React `frontend/src/pages/*.jsx` |
-| SQLite ledger | `data/recovery_ledger.db` + Node repository/services |
-| `failed_payments.csv` | `data/failed_payments.csv` |
-
-## Safety boundary
-
-The backend and AI service preserve the original suppression, quiet-hour, high-ticket/HITL, PTP, UTR, and audit behaviors. Payment credentials are server-side only. The SQL analytics route accepts a single SELECT statement and blocks mutation/DDL keywords.
-
-
-## Windows startup
-
-The repository also includes one-click helper scripts under `scripts/`: `start_ai_windows.bat`, `start_backend_windows.bat`, and `start_frontend_windows.bat`. These keep the correct working directory, create missing `.env` files, and install dependencies when `node_modules`/`.venv` are absent.
-
-
-
-Use three terminals.
-
-### AI service
 ```cmd
 cd ai-service
+python -m venv .venv
 .venv\Scripts\activate
 python -m pip install -r requirements.txt
 copy .env.example .env
 python -m uvicorn app.main:app --reload --port 8001
 ```
 
-### Backend
+#### Windows PowerShell
+
+```powershell
+cd ai-service
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+python -m uvicorn app.main:app --reload --port 8001
+```
+
+AI service:
+
+```text
+http://localhost:8001/
+```
+
+API documentation:
+
+```text
+http://localhost:8001/docs
+```
+
+### 2. Backend
+
 ```cmd
 cd backend
 npm install
@@ -176,26 +294,245 @@ copy .env.example .env
 npm run dev
 ```
 
-The backend root `http://localhost:4000/` now returns a JSON health response instead of `Cannot GET /`.
+Backend:
 
-### Frontend
+```text
+http://localhost:4000/
+```
+
+Health check:
+
+```text
+http://localhost:4000/api/health
+```
+
+### 3. Frontend
+
 ```cmd
 cd frontend
 npm install
 npm run dev
 ```
 
-The frontend defaults to `http://localhost:4000/api`; set `VITE_API_BASE_URL` only when using a different backend address.
+Frontend:
 
+```text
+http://localhost:5173/
+```
 
-### Windows / Node SQLite note
+---
 
-The backend uses Node's built-in `node:sqlite` module instead of `better-sqlite3`. This avoids native `better_sqlite3.node` binding errors when the installed Node ABI does not match the downloaded addon. Node 22+ is required. The existing `data/recovery_ledger.db` is used unchanged.
+## Environment Variables
 
-The React app's nested workspace routes are rendered through React Router's `Outlet`, so Dashboard/Triage/Batch/etc. are visible inside the common AppShell.
+### AI Service
 
-## Updated visual theme (Buildathon-inspired)
+Create:
 
-The frontend uses a warm, editorial fintech theme inspired by the supplied Razorpay Buildathon reference: near-black `#0E0B08`, warm ivory `#EBE4D1`, muted beige `#AF9F7E`, and gold `#D9A353`, with restrained amber gradients. The home hero uses a slow GSAP kinetic background with optional Web Audio reactivity. Navigation, buttons, charts, status badges, selects, and workspace surfaces use the same design tokens.
+```text
+ai-service/.env
+```
 
-The workspace header now has a functional page search and notifications popover. The RazorRescue brand mark links back to `/`, and the former Merchant Workspace/Test Mode blocks were removed from the visible sidebar/header.
+Example:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+SARVAM_API_KEY=your_sarvam_api_key
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxx
+```
+
+### Frontend
+
+Create:
+
+```text
+frontend/.env
+```
+
+Example:
+
+```env
+VITE_API_BASE_URL=http://localhost:4000/api
+```
+
+Keep credentials server-side. Never commit `.env` files or API keys.
+
+---
+
+## Application Routes
+
+| Route | Purpose |
+|---|---|
+| `/` | Product landing page |
+| `/dashboard` | Executive recovery dashboard |
+| `/triage` | Single-customer AI triage and recovery |
+| `/batch-recovery` | Batch recovery and analysis |
+| `/promise-to-pay` | PTP and dispute analysis |
+| `/compliance` | Compliance and suppression controls |
+| `/audit-ledger` | Audit history, SQL analytics and PDF export |
+| `/roi-calculator` | Recovery ROI analysis |
+| `/recovery-demo/:transactionId` | Local/demo recovery payment destination |
+
+---
+
+## Recovery Workflow
+
+![alt text](RazorRescue_Modern_WarmTheme_Final/RazorRescue_Final/frontend/src/assets/RazorRescue_Recovery_Workflow.png)
+
+Communication and payment previews do not bypass the final safety gate. Suppression, quiet-hour, and HITL rules remain enforced before dispatch.
+
+---
+
+## Multilingual & Voice Recovery
+
+Supported languages:
+
+- Hinglish
+- Hindi
+- Tamil
+- Telugu
+- Marathi
+- Gujarati
+- Punjabi
+- Bengali
+- Kannada
+- English
+
+The selected language controls customer-message localization and regional voice generation.
+
+Voice generation uses Sarvam when configured and can fall back to gTTS for development/demo use.
+
+---
+
+## Payment, QR & WhatsApp
+
+### Payment Recovery
+
+The server can generate a Razorpay test payment link through the Razorpay integration.
+
+### QR Recovery
+
+The generated recovery URL is rendered as a QR code in Triage Studio.
+
+### WhatsApp
+
+The system generates a WhatsApp draft URL containing the customer message and phone number.
+
+The browser opens WhatsApp with the message prefilled; the application does not attempt to programmatically paste into WhatsApp.
+
+A separate copy-draft action is available.
+
+---
+
+## Responsive Design
+
+The UI follows a mobile-first approach and adapts to:
+
+- Mobile
+- Tablet
+- Laptop
+- Desktop
+
+Responsive behavior covers navigation, headers, metric cards, recovery forms, charts, QR layouts, audit tables, and SQL analytics.
+
+The Audit Ledger keeps horizontal and vertical scrolling inside the audit-history panel with a custom themed scrollbar.
+
+---
+
+## API Surface
+
+### AI Service
+
+```text
+GET  /
+GET  /health
+
+POST /recovery/run
+POST /recovery/communication
+POST /ptp/analyze
+POST /voice/synthesize
+POST /compliance/evaluate
+POST /report
+```
+
+---
+
+## Safety & Governance
+
+RazorRescue is designed as a bounded recovery system rather than unrestricted automation.
+
+Key controls include:
+
+- Customer opt-out suppression
+- Quiet-hour handling
+- HITL approval
+- Confidence-based decisions
+- Read-only analytics
+- Persistent audit history
+- Server-side payment credentials
+- Separation between preview and dispatch
+
+The system is intended as a controlled merchant-operations workflow and should use test credentials and demo payment flows during development.
+
+---
+
+## Windows Helper Scripts
+
+The repository includes:
+
+```text
+scripts/start_ai_windows.bat
+scripts/start_backend_windows.bat
+scripts/start_frontend_windows.bat
+```
+
+These scripts simplify local Windows startup by using the correct working directories and commands.
+
+---
+
+## Development Flow
+
+Start the services in this order:
+
+```text
+AI Service   :8001
+     ↓
+Backend      :4000
+     ↓
+Frontend     :5173
+```
+
+Verify:
+
+```text
+http://localhost:8001/
+http://localhost:4000/api/health
+http://localhost:5173/
+```
+
+---
+
+## Real-World Implementation
+
+RazorRescue is designed around a realistic merchant revenue-recovery workflow rather than a standalone AI demonstration.
+
+A production implementation could connect the platform to:
+
+- Payment gateway transaction events
+- Merchant transaction databases
+- Customer communication systems
+- Payment/retry links
+- Voice and messaging providers
+- Compliance and suppression registries
+- Finance and reporting systems
+
+The current project uses a local SQLite audit/data layer and test/demo integrations. A production deployment would require secure authentication, authorization, encrypted secrets, production-grade databases, provider-specific compliance reviews, monitoring, rate limits, audit controls, and formal testing before handling real customer or payment data.
+
+---
+
+## License
+
+This project is intended for buildathon, demonstration, and development purposes.
+
+Do not use the demo configuration or test integrations for production financial operations. Before any real-world deployment, replace demo credentials and services with appropriately secured production infrastructure and complete the required security, compliance, privacy, and payment-provider reviews.
+
