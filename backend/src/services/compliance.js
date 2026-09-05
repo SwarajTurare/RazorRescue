@@ -1,0 +1,2 @@
+import {db} from '../database/db.js';
+export const suppress=(phone,reason)=>db.prepare('INSERT OR REPLACE INTO suppression_registry(phone,reason) VALUES(?,?)').run(phone,reason); export const isSuppressed=phone=>Boolean(db.prepare('SELECT 1 FROM suppression_registry WHERE phone=?').get(phone)); export const listSuppressed=()=>db.prepare('SELECT phone FROM suppression_registry ORDER BY created_at DESC').all().map(x=>x.phone);

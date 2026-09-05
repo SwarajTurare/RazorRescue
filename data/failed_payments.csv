@@ -1,0 +1,61 @@
+transaction_id,customer_id,name,phone,amount,gross_margin,abandonment_count_30d,attempt_number,days_overdue,raw_gateway_error,failure_reason,category,payment_method,state,preferred_language,ptp_status,status
+TXN_202600,CUST_100,Sneha Iyer,9719835355,499,0.53,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Tamil Nadu,Tamil,None,failed
+TXN_202601,CUST_101,Amit Sharma,9615997261,999,0.46,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Tamil Nadu,Tamil,None,failed
+TXN_202602,CUST_102,Rohan Das,9706750149,2499,0.42,0,1,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Gujarat,Gujarati,None,failed
+TXN_202603,CUST_103,Karan Mehta,9603488995,2499,0.39,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Delhi,Hindi,None,failed
+TXN_202604,CUST_104,Sneha Iyer,9780707823,12500,0.31,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Delhi,Hindi,None,failed
+TXN_202605,CUST_105,Neha Kulkarni,9742013556,28000,0.23,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Tamil Nadu,Tamil,None,failed
+TXN_202606,CUST_106,Priya Nair,9896374558,999,0.64,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Punjab,Punjabi,None,failed
+TXN_202607,CUST_107,Suresh Babu,9722351953,2499,0.51,0,1,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Telangana,Telugu,None,failed
+TXN_202608,CUST_108,Karan Mehta,9843422802,2499,0.59,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Tamil Nadu,Tamil,None,failed
+TXN_202609,CUST_109,Sneha Iyer,9959797556,1499,0.35,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Telangana,Telugu,None,failed
+TXN_202610,CUST_110,Rahul Verma,9848174062,1499,0.43,0,1,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Tamil Nadu,Tamil,None,failed
+TXN_202611,CUST_111,Sneha Iyer,9617233684,2499,0.5,0,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,West Bengal,Bengali,None,failed
+TXN_202612,CUST_112,Arjun Kapoor,9985427289,4999,0.21,0,3,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Delhi,Hindi,None,failed
+TXN_202613,CUST_113,Anjali Gupta,9676703600,54000,0.37,0,3,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Gujarat,Gujarati,None,failed
+TXN_202614,CUST_114,Karan Mehta,9913847215,2499,0.53,0,3,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Karnataka,Kannada,None,failed
+TXN_202615,CUST_115,Rohan Das,9864954299,12500,0.28,1,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Delhi,Hindi,None,failed
+TXN_202616,CUST_116,Manish Joshi,9965330570,999,0.25,0,1,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Maharashtra,Marathi,None,failed
+TXN_202617,CUST_117,Rohan Das,9734976925,28000,0.36,2,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Tamil Nadu,Tamil,None,failed
+TXN_202618,CUST_118,Manish Joshi,9743250681,999,0.5,0,1,24,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Maharashtra,Marathi,None,failed
+TXN_202619,CUST_119,Rahul Verma,9843591060,999,0.32,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Telangana,Telugu,None,failed
+TXN_202620,CUST_120,Meera Sen,9935705485,1499,0.42,0,1,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,West Bengal,Bengali,None,failed
+TXN_202621,CUST_121,Rohan Das,9884731459,1499,0.36,0,1,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Gujarat,Gujarati,None,failed
+TXN_202622,CUST_122,Arjun Kapoor,9765095391,54000,0.19,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Telangana,Telugu,None,failed
+TXN_202623,CUST_123,Priya Nair,9645984845,2499,0.59,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Maharashtra,Marathi,None,failed
+TXN_202624,CUST_124,Rohan Das,9667517162,999,0.64,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Punjab,Punjabi,None,failed
+TXN_202625,CUST_125,Meera Sen,9925662628,1499,0.3,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Punjab,Punjabi,None,failed
+TXN_202626,CUST_126,Suresh Babu,9948900625,2499,0.52,2,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Gujarat,Gujarati,None,failed
+TXN_202627,CUST_127,Priya Nair,9781508307,54000,0.24,0,1,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Punjab,Punjabi,None,failed
+TXN_202628,CUST_128,Suresh Babu,9631607612,2499,0.18,0,3,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Gujarat,Gujarati,None,failed
+TXN_202629,CUST_129,Priya Nair,9876035466,499,0.58,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Tamil Nadu,Tamil,None,failed
+TXN_202630,CUST_130,Rahul Verma,9988346949,54000,0.28,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,West Bengal,Bengali,None,failed
+TXN_202631,CUST_131,Sneha Iyer,9650640778,2499,0.55,0,1,16,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Punjab,Punjabi,None,failed
+TXN_202632,CUST_132,Meera Sen,9991419619,12500,0.38,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Delhi,Hindi,None,failed
+TXN_202633,CUST_133,Manish Joshi,9658663364,499,0.37,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Tamil Nadu,Tamil,None,failed
+TXN_202634,CUST_134,Rahul Verma,9826495980,2499,0.43,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,Gujarat,Gujarati,None,failed
+TXN_202635,CUST_135,Arjun Kapoor,9640471954,54000,0.3,0,1,0,BAD_REQUEST_PAYMENT_TIMED_OUT,network_error,Gateway Degradation,NetBanking Gateway,West Bengal,Bengali,None,failed
+TXN_202636,CUST_136,Meera Sen,9607923061,499,0.49,3,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Tamil Nadu,Tamil,None,failed
+TXN_202637,CUST_137,Sneha Iyer,9815306864,1499,0.37,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Gujarat,Gujarati,None,failed
+TXN_202638,CUST_138,Karan Mehta,9844280759,28000,0.18,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Karnataka,Kannada,None,failed
+TXN_202639,CUST_139,Sneha Iyer,9631397978,54000,0.25,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Delhi,Hindi,None,failed
+TXN_202640,CUST_140,Anjali Gupta,9869965740,12500,0.21,0,1,24,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Maharashtra,Marathi,None,failed
+TXN_202641,CUST_141,Meera Sen,9699764018,499,0.63,0,1,2,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Karnataka,Kannada,None,failed
+TXN_202642,CUST_142,Sneha Iyer,9910804800,2499,0.37,0,3,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Tamil Nadu,Tamil,None,failed
+TXN_202643,CUST_143,Neha Kulkarni,9880666834,999,0.38,0,1,24,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Maharashtra,Marathi,None,failed
+TXN_202644,CUST_144,Sneha Iyer,9742600706,2499,0.49,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,West Bengal,Bengali,None,failed
+TXN_202645,CUST_145,Amit Sharma,9846040164,4999,0.39,0,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Karnataka,Kannada,None,failed
+TXN_202646,CUST_146,Karan Mehta,9671112077,999,0.43,0,1,24,INVOICE_AGING_NET30_OVERDUE,b2b_overdue,Commercial Receivables,NEFT/Bank Transfer,Tamil Nadu,Tamil,None,failed
+TXN_202647,CUST_147,Anjali Gupta,9891637921,2499,0.35,0,1,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Tamil Nadu,Tamil,None,failed
+TXN_202648,CUST_148,Rohan Das,9760727741,499,0.49,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,West Bengal,Bengali,None,failed
+TXN_202649,CUST_149,Arjun Kapoor,9657464501,1499,0.3,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Tamil Nadu,Tamil,None,failed
+TXN_202650,CUST_150,Sneha Iyer,9985265108,4999,0.31,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Karnataka,Kannada,None,failed
+TXN_202651,CUST_151,Arjun Kapoor,9627272449,4999,0.42,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Gujarat,Gujarati,None,failed
+TXN_202652,CUST_152,Manish Joshi,9670233268,4999,0.2,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Delhi,Hindi,None,failed
+TXN_202653,CUST_153,Rohan Das,9978852327,1499,0.53,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,West Bengal,Bengali,None,failed
+TXN_202654,CUST_154,Rohan Das,9619342459,999,0.22,1,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Maharashtra,Marathi,None,failed
+TXN_202655,CUST_155,Divya Reddy,9621418396,28000,0.24,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Karnataka,Kannada,None,failed
+TXN_202656,CUST_156,Manish Joshi,9900585174,2499,0.49,0,2,0,MANDATE_TOKEN_EXPIRED,expired_card,Token Decay,Credit Card Vault,Gujarat,Gujarati,None,failed
+TXN_202657,CUST_157,Arjun Kapoor,9821348877,2499,0.59,1,1,0,ORDER_CHECKOUT_ABANDONED,checkout_abandoned,Cart Friction,UPI Express,Karnataka,Kannada,None,failed
+TXN_202658,CUST_158,Manish Joshi,9959653651,12500,0.55,0,2,0,GATEWAY_ERROR_DEBIT_FAILED,insufficient_funds,Mandate Balance,UPI Auto-Debit,Karnataka,Kannada,None,failed
+TXN_202659,CUST_159,Pooja Patel,9658033396,4999,0.25,0,1,0,AUTH_OTP_DROPPED,auth_timeout,Authentication Failure,Debit Card 3DS OTP,Gujarat,Gujarati,None,failed
