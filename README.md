@@ -70,7 +70,7 @@ The platform covers failed payments, authentication failures, expired cards, che
 
 ## Architecture
 
-![Architecture_Img](RazorRescue_Modern_WarmTheme_Final/RazorRescue_Final/frontend/src/assets/RazorRescue_Architecture.jpg)
+![alt text](frontend/src/assets/RazorRescue_Architecture.jpg)
 
 ### Responsibilities
 
@@ -377,7 +377,7 @@ Keep credentials server-side. Never commit `.env` files or API keys.
 
 ## Recovery Workflow
 
-![alt text](RazorRescue_Modern_WarmTheme_Final/RazorRescue_Final/frontend/src/assets/RazorRescue_Recovery_Workflow.png)
+![recovery_workflow](frontend/src/assets/RazorRescue_Recovery_Workflow.png)
 
 Communication and payment previews do not bypass the final safety gate. Suppression, quiet-hour, and HITL rules remain enforced before dispatch.
 
