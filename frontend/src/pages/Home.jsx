@@ -51,7 +51,7 @@ export default function Home() {
 
             <footer className="flex shrink-0 items-center justify-between border-t border-rr-border/60 py-4 text-[10px] text-rr-dim sm:text-[11px]">
                 <span>Built for real-world fintech operations</span>
-                <span className="hidden sm:block">React · Node.js · Python · SQLite</span>
+                {/* <span className="hidden sm:block">React · Node.js · Python · SQLite</span> */}
             </footer>
         </div>
     </div>
