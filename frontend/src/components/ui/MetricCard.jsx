@@ -1,1 +1,39 @@
-export default function MetricCard({label,value,delta,caption,icon:Icon}){return <div data-motion="fade" className="rr-surface rr-glow rounded-2xl p-4 md:p-5"><div className="flex items-center justify-between"><div className="text-xs uppercase tracking-[.12em] text-rr-dim">{label}</div>{Icon&&<div className="rounded-xl border border-rr-border bg-rr-bg/60 p-2 text-rr-gold"><Icon size={17}/></div>}</div><div className="mt-3 text-2xl font-semibold tracking-tight text-rr-text md:text-3xl">{value}</div>{delta&&<div className="mt-2 text-xs text-rr-gold">{delta}</div>}{caption&&<div className="mt-1 text-xs text-rr-dim">{caption}</div>}</div>}
+export default function MetricCard({
+  label,
+  value,
+  delta,
+  caption,
+  icon: Icon,
+}) {
+  return (
+    <div data-motion="fade" className="rr-surface rr-glow rounded-2xl p-4 md:p-5">
+      <div className="flex items-center justify-between">
+        <div className="text-xs uppercase tracking-[.12em] text-rr-dim">
+          {label}
+        </div>
+
+        {Icon && (
+          <div className="rounded-xl border border-rr-border bg-rr-bg/60 p-2 text-rr-gold">
+            <Icon size={17} />
+          </div>
+        )}
+      </div>
+
+      <div className="mt-3 text-2xl font-semibold tracking-tight text-rr-text md:text-3xl">
+        {value}
+      </div>
+
+      {delta && (
+        <div className="mt-2 text-xs text-rr-gold">
+          {delta}
+        </div>
+      )}
+
+      {caption && (
+        <div className="mt-1 text-xs text-rr-dim">
+          {caption}
+        </div>
+      )}
+    </div>
+  );
+}

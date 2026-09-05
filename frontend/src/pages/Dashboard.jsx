@@ -1,7 +1,22 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle, BadgeIndianRupee, CheckCircle2, ShieldCheck } from 'lucide-react';
+import {
+  AlertTriangle,
+  BadgeIndianRupee,
+  CheckCircle2,
+  ShieldCheck,
+} from 'lucide-react';
 import { Doughnut, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler } from 'chart.js';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler,
+} from 'chart.js';
 import SectionHeader from '../components/ui/SectionHeader';
 import MetricCard from '../components/ui/MetricCard';
 import ChartCard from '../components/charts/ChartCard';
@@ -9,7 +24,285 @@ import StatusBadge from '../components/ui/StatusBadge';
 import { api } from '../services/api';
 import { toast } from 'react-toastify';
 import { usePageMotion } from '../hooks/usePageMotion';
-ChartJS.register(ArcElement,CategoryScale,LinearScale,PointElement,LineElement,Tooltip,Legend,Filler);
 
-const chartOpts={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:'rgba(235,228,209,.68)',boxWidth:10,font:{size:11}}}},scales:{x:{ticks:{color:'rgba(175,159,126,.68)'},grid:{color:'rgba(70,58,49,.35)'}},y:{ticks:{color:'rgba(175,159,126,.68)'},grid:{color:'rgba(70,58,49,.35)'}}}};
-export default function Dashboard(){const ref=usePageMotion();const [d,setD]=useState(null);const [txns,setTxns]=useState([]);useEffect(()=>{Promise.all([api.dashboard(),api.transactions()]).then(([a,b])=>{setD(a);setTxns(b.transactions||[])}).catch(e=>toast.error(e.message))},[]);if(!d)return <div ref={ref} className="animate-pulse py-12 text-[#756A57]">Loading recovery operations…</div>;const pie={labels:d.failureBreakdown.map(x=>x.failure_reason),datasets:[{data:d.failureBreakdown.map(x=>x.amount),backgroundColor:['#D9A353','#B87436','#7EA87A','#8D6C47','#E7B96A','#B66A5E'],borderWidth:0}]};const line={labels:d.trend.labels,datasets:[{label:'Recovered ₹',data:d.trend.values,borderColor:'#D9A353',backgroundColor:'rgba(217,163,83,.10)',fill:true,tension:.35,pointRadius:2}]};return <div ref={ref}><SectionHeader eyebrow="Command center" title="Executive recovery dashboard" description="Track measured revenue recovered from payment drop-offs, compliance gates, and active recovery operations."/><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><MetricCard label="Revenue at risk" value={`₹${d.totalRisk.toLocaleString('en-IN')}`} caption="Current failed-payment pool" icon={BadgeIndianRupee}/><MetricCard label="Measured recovered" value={`₹${d.recovered.toLocaleString('en-IN')}`} delta={`${d.recoveryRate.toFixed(1)}% recovery yield`} caption="Persisted recovery events" icon={CheckCircle2}/><MetricCard label="Penalties saved" value={`₹${d.penaltiesSaved.toLocaleString('en-IN')}`} delta="Bounded retry behavior" caption="Bank fees avoided" icon={AlertTriangle}/><MetricCard label="Compliance" value="100%" delta={`${d.suppressedCount} suppressed`} caption="Safety gates active" icon={ShieldCheck}/></div><div className="mt-4 grid gap-4 lg:grid-cols-[1.35fr_.65fr]"><ChartCard title="Measured recovery stream"><Line data={line} options={chartOpts}/></ChartCard><ChartCard title="Revenue leakage"><Doughnut data={pie} options={{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'rgba(235,228,209,.68)',boxWidth:10,font:{size:11}}}}}}/></ChartCard></div><div className="mt-4 rr-surface rr-glow overflow-hidden rounded-2xl"><div className="flex items-center justify-between border-b border-[#463A31]/70 px-4 py-4"><div><h2 className="text-sm font-semibold">Active transaction stream</h2><p className="mt-1 text-xs text-[#756A57]">Live dataset-backed view</p></div><span className="text-xs text-[#756A57]">{txns.length} records</span></div><div className="overflow-x-auto"><table className="min-w-[850px] w-full text-left text-xs"><thead className="text-[#756A57]"><tr className="border-b border-[#463A31]/45">{['Transaction','Customer','Amount','Reason','Attempt','Aging','State','Status'].map(h=><th key={h} className="px-4 py-3 font-medium">{h}</th>)}</tr></thead><tbody>{txns.slice(0,12).map(t=><tr key={t.transaction_id} className="border-b border-[#463A31]/40 last:border-0"><td className="px-4 py-3 font-medium">{t.transaction_id}</td><td className="px-4 py-3 text-[#AF9F7E]">{t.name}</td><td className="px-4 py-3">₹{Number(t.amount).toLocaleString('en-IN')}</td><td className="px-4 py-3 text-[#AF9F7E]">{t.failure_reason}</td><td className="px-4 py-3">{t.attempt_number}</td><td className="px-4 py-3">{t.days_overdue}d</td><td className="px-4 py-3">{t.state}</td><td className="px-4 py-3"><StatusBadge tone="danger">failed</StatusBadge></td></tr>)}</tbody></table></div></div></div>}
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+const chartOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  interaction: {
+    mode: 'index',
+    intersect: false,
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: 'rgba(235,228,209,.68)',
+        boxWidth: 10,
+        font: {
+          size: 11,
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: 'rgba(175,159,126,.68)',
+      },
+      grid: {
+        color: 'rgba(70,58,49,.35)',
+      },
+    },
+    y: {
+      ticks: {
+        color: 'rgba(175,159,126,.68)',
+      },
+      grid: {
+        color: 'rgba(70,58,49,.35)',
+      },
+    },
+  },
+};
+
+export default function Dashboard() {
+  const ref = usePageMotion();
+  const [d, setD] = useState(null);
+  const [txns, setTxns] = useState([]);
+
+  useEffect(() => {
+    Promise.all([
+      api.dashboard(),
+      api.transactions(),
+    ])
+      .then(([a, b]) => {
+        setD(a);
+        setTxns(b.transactions || []);
+      })
+      .catch((e) => toast.error(e.message));
+  }, []);
+
+  if (!d) {
+    return (
+      <div
+        ref={ref}
+        className="animate-pulse py-12 text-[#756A57]"
+      >
+        Loading recovery operations…
+      </div>
+    );
+  }
+
+  const pie = {
+    labels: d.failureBreakdown.map(
+      (x) => x.failure_reason
+    ),
+    datasets: [
+      {
+        data: d.failureBreakdown.map(
+          (x) => x.amount
+        ),
+        backgroundColor: [
+          '#D9A353',
+          '#B87436',
+          '#7EA87A',
+          '#8D6C47',
+          '#E7B96A',
+          '#B66A5E',
+        ],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const line = {
+    labels: d.trend.labels,
+    datasets: [
+      {
+        label: 'Recovered ₹',
+        data: d.trend.values,
+        borderColor: '#D9A353',
+        backgroundColor: 'rgba(217,163,83,.10)',
+        fill: true,
+        tension: 0.35,
+        pointRadius: 2,
+      },
+    ],
+  };
+
+  return (
+    <div ref={ref}>
+      <SectionHeader
+        eyebrow="Command center"
+        title="Executive recovery dashboard"
+        description="Track measured revenue recovered from payment drop-offs, compliance gates, and active recovery operations."
+      />
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <MetricCard
+          label="Revenue at risk"
+          value={`₹${d.totalRisk.toLocaleString('en-IN')}`}
+          caption="Current failed-payment pool"
+          icon={BadgeIndianRupee}
+        />
+
+        <MetricCard
+          label="Measured recovered"
+          value={`₹${d.recovered.toLocaleString('en-IN')}`}
+          delta={`${d.recoveryRate.toFixed(1)}% recovery yield`}
+          caption="Persisted recovery events"
+          icon={CheckCircle2}
+        />
+
+        <MetricCard
+          label="Penalties saved"
+          value={`₹${d.penaltiesSaved.toLocaleString('en-IN')}`}
+          delta="Bounded retry behavior"
+          caption="Bank fees avoided"
+          icon={AlertTriangle}
+        />
+
+        <MetricCard
+          label="Compliance"
+          value="100%"
+          delta={`${d.suppressedCount} suppressed`}
+          caption="Safety gates active"
+          icon={ShieldCheck}
+        />
+      </div>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-[1.35fr_.65fr]">
+        <ChartCard title="Measured recovery stream">
+          <Line
+            data={line}
+            options={chartOpts}
+          />
+        </ChartCard>
+
+        <ChartCard title="Revenue leakage">
+          <Doughnut
+            data={pie}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: {
+                    color: 'rgba(235,228,209,.68)',
+                    boxWidth: 10,
+                    font: {
+                      size: 11,
+                    },
+                  },
+                },
+              },
+            }}
+          />
+        </ChartCard>
+      </div>
+
+      <div className="mt-4 rr-surface rr-glow overflow-hidden rounded-2xl">
+        <div className="flex items-center justify-between border-b border-[#463A31]/70 px-4 py-4">
+          <div>
+            <h2 className="text-sm font-semibold">
+              Active transaction stream
+            </h2>
+            <p className="mt-1 text-xs text-[#756A57]">
+              Live dataset-backed view
+            </p>
+          </div>
+
+          <span className="text-xs text-[#756A57]">
+            {txns.length} records
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-[850px] w-full text-left text-xs">
+            <thead className="text-[#756A57]">
+              <tr className="border-b border-[#463A31]/45">
+                {[
+                  'Transaction',
+                  'Customer',
+                  'Amount',
+                  'Reason',
+                  'Attempt',
+                  'Aging',
+                  'State',
+                  'Status',
+                ].map((h) => (
+                  <th
+                    key={h}
+                    className="px-4 py-3 font-medium"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {txns
+                .slice(0, 12)
+                .map((t) => (
+                  <tr
+                    key={t.transaction_id}
+                    className="border-b border-[#463A31]/40 last:border-0"
+                  >
+                    <td className="px-4 py-3 font-medium">
+                      {t.transaction_id}
+                    </td>
+
+                    <td className="px-4 py-3 text-[#AF9F7E]">
+                      {t.name}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      ₹
+                      {Number(
+                        t.amount
+                      ).toLocaleString(
+                        'en-IN'
+                      )}
+                    </td>
+
+                    <td className="px-4 py-3 text-[#AF9F7E]">
+                      {t.failure_reason}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      {t.attempt_number}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      {t.days_overdue}d
+                    </td>
+
+                    <td className="px-4 py-3">
+                      {t.state}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <StatusBadge tone="danger">
+                        failed
+                      </StatusBadge>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}

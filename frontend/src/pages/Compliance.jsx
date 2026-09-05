@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import {
   ShieldCheck,
   RefreshCw,
@@ -59,7 +58,7 @@ export default function Compliance() {
 
       toast.error(
         error?.message ||
-        'Unable to load suppression registry'
+          'Unable to load suppression registry'
       );
     } finally {
       setRefreshing(false);
@@ -83,6 +82,7 @@ export default function Compliance() {
 
   const evaluateCompliance = async () => {
     const message = text.trim();
+
     const normalizedPhone = phone
       .replace(/\D/g, '')
       .slice(-10);
@@ -92,6 +92,7 @@ export default function Compliance() {
       toast.warning(
         'Enter an inbound customer message first'
       );
+
       return;
     }
 
@@ -100,6 +101,7 @@ export default function Compliance() {
       toast.warning(
         'Enter a valid 10-digit phone number'
       );
+
       return;
     }
 
@@ -155,7 +157,7 @@ export default function Compliance() {
 
           toast.error(
             suppressionError?.message ||
-            'Rule detected, but suppression could not be saved.'
+              'Rule detected, but suppression could not be saved.'
           );
         }
       } else {
@@ -171,7 +173,7 @@ export default function Compliance() {
 
       toast.error(
         error?.message ||
-        'Compliance evaluation failed'
+          'Compliance evaluation failed'
       );
     } finally {
       setEvaluating(false);
@@ -202,65 +204,30 @@ export default function Compliance() {
           MAIN GRID
       ======================================================= */}
 
-      <div
-        className="
-          grid
-          w-full
-          gap-4
-
-          lg:grid-cols-[minmax(0,1fr)_minmax(320px,.8fr)]
-        "
-      >
+      <div className="grid w-full gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,.8fr)]">
 
 
         {/* ====================================================
             EVALUATION PANEL
         ===================================================== */}
 
-        <section
-          className="
-            rr-surface
-            rr-glow
-            min-w-0
-            rounded-2xl
-            p-4
-            sm:p-5
-          "
-        >
+        <section className="rr-surface rr-glow min-w-0 rounded-2xl p-4 sm:p-5">
 
           {/* Header */}
 
-          <div
-            className="
-              flex
-              flex-wrap
-              items-center
-              justify-between
-              gap-3
-            "
-          >
+          <div className="flex flex-wrap items-center justify-between gap-3">
 
-            <div
-              className="
-                flex
-                items-center
-                gap-2
-              "
-            >
+            <div className="flex items-center gap-2">
+
               <ShieldCheck
                 size={18}
                 className="text-rr-gold"
               />
 
-              <h2
-                className="
-                  text-sm
-                  font-semibold
-                  text-rr-text
-                "
-              >
+              <h2 className="text-sm font-semibold text-rr-text">
                 Evaluate inbound stop rules
               </h2>
+
             </div>
 
 
@@ -268,22 +235,7 @@ export default function Compliance() {
               <button
                 type="button"
                 onClick={clearEvaluation}
-                className="
-                  rounded-lg
-                  border
-                  border-rr-border
-
-                  px-3
-                  py-1.5
-
-                  text-xs
-                  text-rr-muted
-
-                  transition
-
-                  hover:border-rr-gold/40
-                  hover:text-rr-text
-                "
+                className="rounded-lg border border-rr-border px-3 py-1.5 text-xs text-rr-muted transition hover:border-rr-gold/40 hover:text-rr-text"
               >
                 Clear
               </button>
@@ -300,23 +252,16 @@ export default function Compliance() {
             ================================================== */}
 
             <div>
-              <label
-                className="
-                  flex
-                  items-center
-                  gap-2
 
-                  text-xs
-                  font-medium
-                  text-rr-muted
-                "
-              >
+              <label className="flex items-center gap-2 text-xs font-medium text-rr-muted">
+
                 <MessageSquareText
                   size={14}
                   className="text-rr-gold"
                 />
 
                 Customer message
+
               </label>
 
 
@@ -327,44 +272,14 @@ export default function Compliance() {
                 }
                 rows={5}
                 placeholder="e.g. band karo, stop messaging me, don't contact me again"
-                className="
-                  mt-2
-                  w-full
-                  resize-y
-
-                  rounded-xl
-                  border
-                  border-rr-border
-
-                  bg-rr-bg
-
-                  p-3
-
-                  text-sm
-                  leading-6
-                  text-rr-text
-
-                  outline-none
-
-                  placeholder:text-rr-dim
-
-                  transition
-
-                  focus:border-rr-gold/50
-                  focus:ring-1
-                  focus:ring-rr-gold/20
-                "
+                className="mt-2 w-full resize-y rounded-xl border border-rr-border bg-rr-bg p-3 text-sm leading-6 text-rr-text outline-none placeholder:text-rr-dim transition focus:border-rr-gold/50 focus:ring-1 focus:ring-rr-gold/20"
               />
 
-              <p
-                className="
-                  mt-1.5
-                  text-[11px]
-                  text-rr-dim
-                "
-              >
+
+              <p className="mt-1.5 text-[11px] text-rr-dim">
                 The message is checked for explicit or conversational opt-out intent.
               </p>
+
             </div>
 
 
@@ -373,23 +288,16 @@ export default function Compliance() {
             ================================================== */}
 
             <div>
-              <label
-                className="
-                  flex
-                  items-center
-                  gap-2
 
-                  text-xs
-                  font-medium
-                  text-rr-muted
-                "
-              >
+              <label className="flex items-center gap-2 text-xs font-medium text-rr-muted">
+
                 <Phone
                   size={14}
                   className="text-rr-gold"
                 />
 
                 Associated phone number
+
               </label>
 
 
@@ -398,50 +306,21 @@ export default function Compliance() {
                 inputMode="numeric"
                 value={phone}
                 onChange={(event) => {
-                  const value =
-                    event.target.value
-                      .replace(/\D/g, '')
-                      .slice(0, 10);
+                  const value = event.target.value
+                    .replace(/\D/g, '')
+                    .slice(0, 10);
 
                   setPhone(value);
                 }}
                 placeholder="10-digit phone number"
-                className="
-                  mt-2
-                  w-full
-
-                  rounded-xl
-                  border
-                  border-rr-border
-
-                  bg-rr-bg
-
-                  p-3
-
-                  text-sm
-                  text-rr-text
-
-                  outline-none
-
-                  placeholder:text-rr-dim
-
-                  transition
-
-                  focus:border-rr-gold/50
-                  focus:ring-1
-                  focus:ring-rr-gold/20
-                "
+                className="mt-2 w-full rounded-xl border border-rr-border bg-rr-bg p-3 text-sm text-rr-text outline-none placeholder:text-rr-dim transition focus:border-rr-gold/50 focus:ring-1 focus:ring-rr-gold/20"
               />
 
-              <p
-                className="
-                  mt-1.5
-                  text-[11px]
-                  text-rr-dim
-                "
-              >
+
+              <p className="mt-1.5 text-[11px] text-rr-dim">
                 Default number is loaded, but you can replace it with any customer number.
               </p>
+
             </div>
 
 
@@ -457,35 +336,7 @@ export default function Compliance() {
                 !text.trim() ||
                 phone.length !== 10
               }
-              className="
-                inline-flex
-                w-full
-                items-center
-                justify-center
-                gap-2
-
-                rounded-xl
-
-                bg-rr-gold
-
-                px-4
-                py-3
-
-                text-sm
-                font-semibold
-                text-rr-bg
-
-                shadow-[0_8px_30px_rgba(217,163,83,.10)]
-
-                transition-all
-
-                hover:-translate-y-0.5
-                hover:bg-rr-goldBright
-
-                disabled:cursor-not-allowed
-                disabled:opacity-50
-                disabled:hover:translate-y-0
-              "
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-rr-gold px-4 py-3 text-sm font-semibold text-rr-bg shadow-[0_8px_30px_rgba(217,163,83,.10)] transition-all hover:-translate-y-0.5 hover:bg-rr-goldBright disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
             >
               {evaluating ? (
                 <>
@@ -516,7 +367,6 @@ export default function Compliance() {
                   rounded-2xl
                   border
                   p-4
-
                   ${
                     result.is_opt_out
                       ? 'border-red-400/20 bg-red-500/[.04]'
@@ -525,15 +375,7 @@ export default function Compliance() {
                 `}
               >
 
-                <div
-                  className="
-                    flex
-                    flex-wrap
-                    items-center
-                    justify-between
-                    gap-3
-                  "
-                >
+                <div className="flex flex-wrap items-center justify-between gap-3">
 
                   <div className="flex items-center gap-2">
 
@@ -548,6 +390,7 @@ export default function Compliance() {
                         className="text-green-300"
                       />
                     )}
+
 
                     <StatusBadge
                       tone={
@@ -564,12 +407,7 @@ export default function Compliance() {
                   </div>
 
 
-                  <span
-                    className="
-                      text-[11px]
-                      text-rr-dim
-                    "
-                  >
+                  <span className="text-[11px] text-rr-dim">
                     Compliance engine result
                   </span>
 
@@ -578,25 +416,12 @@ export default function Compliance() {
 
                 <div className="mt-4">
 
-                  <div
-                    className="
-                      text-[11px]
-                      uppercase
-                      tracking-[.12em]
-                      text-rr-dim
-                    "
-                  >
+                  <div className="text-[11px] uppercase tracking-[.12em] text-rr-dim">
                     Reason
                   </div>
 
-                  <p
-                    className="
-                      mt-2
-                      text-sm
-                      leading-6
-                      text-rr-muted
-                    "
-                  >
+
+                  <p className="mt-2 text-sm leading-6 text-rr-muted">
                     {result.reason}
                   </p>
 
@@ -604,54 +429,25 @@ export default function Compliance() {
 
 
                 {result.is_opt_out && (
-                  <div
-                    className="
-                      mt-4
-                      flex
-                      items-start
-                      gap-3
+                  <div className="mt-4 flex items-start gap-3 rounded-xl border border-rr-gold/15 bg-rr-gold/[.04] p-3">
 
-                      rounded-xl
-
-                      border
-                      border-rr-gold/15
-
-                      bg-rr-gold/[.04]
-
-                      p-3
-                    "
-                  >
                     <ShieldAlert
                       size={16}
-                      className="
-                        mt-0.5
-                        shrink-0
-                        text-rr-gold
-                      "
+                      className="mt-0.5 shrink-0 text-rr-gold"
                     />
 
                     <div>
-                      <div
-                        className="
-                          text-xs
-                          font-semibold
-                          text-rr-text
-                        "
-                      >
+
+                      <div className="text-xs font-semibold text-rr-text">
                         Recovery blocked for this customer
                       </div>
 
-                      <div
-                        className="
-                          mt-1
-                          text-[11px]
-                          leading-5
-                          text-rr-dim
-                        "
-                      >
+                      <div className="mt-1 text-[11px] leading-5 text-rr-dim">
                         The number has been added to the persistent do-not-contact registry.
                       </div>
+
                     </div>
+
                   </div>
                 )}
 
@@ -667,58 +463,27 @@ export default function Compliance() {
             SUPPRESSION REGISTRY
         ===================================================== */}
 
-        <section
-          className="
-            rr-surface
-            rr-glow
-            min-w-0
-            rounded-2xl
-            p-4
-            sm:p-5
-          "
-        >
+        <section className="rr-surface rr-glow min-w-0 rounded-2xl p-4 sm:p-5">
 
-          <div
-            className="
-              flex
-              items-start
-              justify-between
-              gap-3
-            "
-          >
+          <div className="flex items-start justify-between gap-3">
 
             <div>
 
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-2
-                "
-              >
+              <div className="flex items-center gap-2">
+
                 <ShieldAlert
                   size={17}
                   className="text-rr-gold"
                 />
 
-                <h2
-                  className="
-                    text-sm
-                    font-semibold
-                    text-rr-text
-                  "
-                >
+                <h2 className="text-sm font-semibold text-rr-text">
                   Do-not-contact registry
                 </h2>
+
               </div>
 
-              <p
-                className="
-                  mt-1
-                  text-xs
-                  text-rr-dim
-                "
-              >
+
+              <p className="mt-1 text-xs text-rr-dim">
                 Persistent suppression records stored in SQLite.
               </p>
 
@@ -731,31 +496,10 @@ export default function Compliance() {
                 loadSuppressionList(true)
               }
               disabled={refreshing}
-              className="
-                inline-flex
-                shrink-0
-                items-center
-                gap-2
-
-                rounded-lg
-                border
-                border-rr-border
-
-                px-2.5
-                py-2
-
-                text-xs
-                text-rr-muted
-
-                transition
-
-                hover:border-rr-gold/40
-                hover:text-rr-text
-
-                disabled:opacity-50
-              "
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-rr-border px-2.5 py-2 text-xs text-rr-muted transition hover:border-rr-gold/40 hover:text-rr-text disabled:opacity-50"
               title="Refresh suppression registry"
             >
+
               <RefreshCw
                 size={14}
                 className={
@@ -765,9 +509,11 @@ export default function Compliance() {
                 }
               />
 
+
               <span className="hidden sm:inline">
                 Refresh
               </span>
+
             </button>
 
           </div>
@@ -778,151 +524,77 @@ export default function Compliance() {
           <div className="mt-5">
 
             {loading ? (
-              <div
-                className="
-                  flex
-                  min-h-[240px]
-                  items-center
-                  justify-center
 
-                  rounded-xl
-                  border
-                  border-rr-border
+              <div className="flex min-h-[240px] items-center justify-center rounded-xl border border-rr-border bg-rr-bg text-xs text-rr-dim">
 
-                  bg-rr-bg
-
-                  text-xs
-                  text-rr-dim
-                "
-              >
                 <div className="flex items-center gap-2">
+
                   <RefreshCw
                     size={15}
                     className="animate-spin"
                   />
 
                   Loading suppression registry...
+
                 </div>
+
               </div>
+
             ) : list.length > 0 ? (
-              <div
-                className="
-                  max-h-[520px]
-                  space-y-2
-                  overflow-auto
-                  pr-1
-                "
-              >
 
-                {list.map((number, index) => (
-                  <div
-                    key={`${number}-${index}`}
-                    className="
-                      flex
-                      flex-wrap
-                      items-center
-                      justify-between
-                      gap-3
+              <div className="max-h-[520px] space-y-2 overflow-auto pr-1">
 
-                      rounded-xl
-
-                      border
-                      border-rr-border/70
-
-                      bg-rr-bg
-
-                      px-3
-                      py-3
-                    "
-                  >
-
+                {list.map(
+                  (number, index) => (
                     <div
-                      className="
-                        flex
-                        min-w-0
-                        items-center
-                        gap-2
-                      "
+                      key={`${number}-${index}`}
+                      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rr-border/70 bg-rr-bg px-3 py-3"
                     >
-                      <Phone
-                        size={14}
-                        className="shrink-0 text-rr-gold"
-                      />
 
-                      <span
-                        className="
-                          truncate
-                          font-mono
-                          text-sm
-                          text-rr-text
-                        "
-                      >
-                        {number}
-                      </span>
+                      <div className="flex min-w-0 items-center gap-2">
+
+                        <Phone
+                          size={14}
+                          className="shrink-0 text-rr-gold"
+                        />
+
+                        <span className="truncate font-mono text-sm text-rr-text">
+                          {number}
+                        </span>
+
+                      </div>
+
+
+                      <StatusBadge tone="danger">
+                        Permanent opt-out
+                      </StatusBadge>
+
                     </div>
-
-
-                    <StatusBadge tone="danger">
-                      Permanent opt-out
-                    </StatusBadge>
-
-                  </div>
-                ))}
+                  )
+                )}
 
               </div>
+
             ) : (
-              <div
-                className="
-                  flex
-                  min-h-[240px]
-                  flex-col
-                  items-center
-                  justify-center
 
-                  rounded-xl
-
-                  border
-                  border-dashed
-                  border-rr-border
-
-                  bg-rr-bg
-
-                  p-6
-
-                  text-center
-                "
-              >
+              <div className="flex min-h-[240px] flex-col items-center justify-center rounded-xl border border-dashed border-rr-border bg-rr-bg p-6 text-center">
 
                 <ShieldCheck
                   size={28}
                   className="text-rr-dim"
                 />
 
-                <div
-                  className="
-                    mt-3
-                    text-sm
-                    font-medium
-                    text-rr-muted
-                  "
-                >
+                <div className="mt-3 text-sm font-medium text-rr-muted">
                   Registry is empty
                 </div>
 
-                <p
-                  className="
-                    mt-1
-                    max-w-xs
-                    text-xs
-                    leading-5
-                    text-rr-dim
-                  "
-                >
+                <p className="mt-1 max-w-xs text-xs leading-5 text-rr-dim">
                   When a customer sends an opt-out message,
                   their number will appear here.
                 </p>
 
               </div>
+
             )}
 
           </div>
@@ -930,40 +602,14 @@ export default function Compliance() {
 
           {/* Footer information */}
 
-          <div
-            className="
-              mt-4
-              flex
-              items-start
-              gap-2
-
-              rounded-xl
-
-              border
-              border-rr-border/50
-
-              bg-rr-gold/[.025]
-
-              p-3
-            "
-          >
+          <div className="mt-4 flex items-start gap-2 rounded-xl border border-rr-border/50 bg-rr-gold/[.025] p-3">
 
             <AlertTriangle
               size={14}
-              className="
-                mt-0.5
-                shrink-0
-                text-rr-gold
-              "
+              className="mt-0.5 shrink-0 text-rr-gold"
             />
 
-            <p
-              className="
-                text-[11px]
-                leading-5
-                text-rr-dim
-              "
-            >
+            <p className="text-[11px] leading-5 text-rr-dim">
               Suppressed customers should not receive automated
               recovery communication until the suppression is
               explicitly cleared through an authorized workflow.
