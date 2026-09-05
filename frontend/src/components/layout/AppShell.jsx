@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import {
   Bell,
   Search,
@@ -11,28 +12,69 @@ import {
   FileText,
   Calculator,
   ExternalLink,
+  Home,
 } from 'lucide-react';
+
 import {
   Link,
   Outlet,
-  useNavigate,
   useLocation,
+  useNavigate,
 } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import KineticBackground from './KineticBackground';
+
 import { useLenis } from '../../hooks/useLenis';
 import { api } from '../../services/api';
 
+
+/* ============================================================
+   WORKSPACE SEARCH LINKS
+============================================================ */
+
 const quickLinks = [
-  ['Dashboard', '/dashboard', LayoutDashboard],
-  ['Triage Studio', '/triage', Bot],
-  ['Batch Recovery', '/batch-recovery', Zap],
-  ['Promise-to-Pay', '/promise-to-pay', MessageSquare],
-  ['Compliance', '/compliance', ShieldCheck],
-  ['Audit Ledger', '/audit-ledger', FileText],
-  ['ROI Calculator', '/roi-calculator', Calculator],
+  [
+    'Dashboard',
+    '/dashboard',
+    LayoutDashboard,
+  ],
+  [
+    'Triage Studio',
+    '/triage',
+    Bot,
+  ],
+  [
+    'Batch Recovery',
+    '/batch-recovery',
+    Zap,
+  ],
+  [
+    'Promise-to-Pay',
+    '/promise-to-pay',
+    MessageSquare,
+  ],
+  [
+    'Compliance',
+    '/compliance',
+    ShieldCheck,
+  ],
+  [
+    'Audit Ledger',
+    '/audit-ledger',
+    FileText,
+  ],
+  [
+    'ROI Calculator',
+    '/roi-calculator',
+    Calculator,
+  ],
 ];
+
+
+/* ============================================================
+   WORKSPACE NOTIFICATIONS
+============================================================ */
 
 const notifications = [
   {
@@ -47,16 +89,25 @@ const notifications = [
   },
 ];
 
+
 export default function AppShell() {
   useLenis();
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [connected, setConnected] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [connected, setConnected] =
+    useState(false);
+
+  const [searchOpen, setSearchOpen] =
+    useState(false);
+
+  const [notificationsOpen, setNotificationsOpen] =
+    useState(false);
+
+  const [query, setQuery] =
+    useState('');
+
 
   /* ==========================================================
      BACKEND HEALTH CHECK
@@ -65,7 +116,7 @@ export default function AppShell() {
   useEffect(() => {
     let mounted = true;
 
-    const checkHealth = async () => {
+    async function checkHealth() {
       try {
         await api.health();
 
@@ -77,59 +128,75 @@ export default function AppShell() {
           setConnected(false);
         }
       }
-    };
+    }
 
     checkHealth();
 
-    const timer = setInterval(checkHealth, 15000);
+    const timer = window.setInterval(
+      checkHealth,
+      15000
+    );
 
     return () => {
       mounted = false;
-      clearInterval(timer);
+      window.clearInterval(timer);
     };
   }, []);
+
 
   /* ==========================================================
      SEARCH
   ========================================================== */
 
-  const normalizedQuery = query.trim().toLowerCase();
+  const normalizedQuery =
+    query.trim().toLowerCase();
 
-  const results = quickLinks.filter(([label]) =>
-    label.toLowerCase().includes(normalizedQuery)
-  );
+  const results = normalizedQuery
+    ? quickLinks.filter(
+        ([label]) =>
+          label
+            .toLowerCase()
+            .includes(normalizedQuery)
+      )
+    : quickLinks;
+
 
   /* ==========================================================
      CLOSE OVERLAYS
   ========================================================== */
 
-  const closeOverlays = () => {
+  function closeOverlays() {
     setSearchOpen(false);
     setNotificationsOpen(false);
     setQuery('');
-  };
+  }
+
 
   /* ==========================================================
      NAVIGATION
   ========================================================== */
 
-  const goTo = (path) => {
+  function goTo(path) {
     navigate(path);
     closeOverlays();
-  };
+  }
+
 
   /* ==========================================================
      KEYBOARD ESCAPE
   ========================================================== */
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    function handleKeyDown(event) {
       if (event.key === 'Escape') {
         closeOverlays();
       }
-    };
+    }
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener(
+      'keydown',
+      handleKeyDown
+    );
 
     return () => {
       window.removeEventListener(
@@ -139,26 +206,54 @@ export default function AppShell() {
     };
   }, []);
 
+
+  /* ==========================================================
+     PAGE
+  ========================================================== */
+
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-rr-bg text-rr-text">
+    <div
+      className="
+        relative
+        min-h-screen
+        overflow-x-hidden
+        bg-rr-bg
+        text-rr-text
+      "
+    >
+
       {/* =====================================================
-          GLOBAL BACKGROUND
+          BACKGROUND
       ====================================================== */}
 
       <KineticBackground />
 
+
       {/* =====================================================
           SIDEBAR
+
+          Sidebar owns desktop + mobile navigation.
       ====================================================== */}
 
       <Sidebar />
 
+
       {/* =====================================================
-          WORKSPACE
-          md:pl-[250px] reserves sidebar width
+          MAIN WORKSPACE
+
+          250px desktop sidebar is reserved here.
       ====================================================== */}
 
-      <main className="relative z-10 min-h-screen md:pl-[250px]">
+      <main
+        className="
+          relative
+          z-10
+          min-h-screen
+
+          md:pl-[250px]
+        "
+      >
+
         {/* ===================================================
             HEADER
         ==================================================== */}
@@ -171,6 +266,7 @@ export default function AppShell() {
 
             flex
             h-[72px]
+
             items-center
             justify-between
 
@@ -178,35 +274,70 @@ export default function AppShell() {
             border-rr-border/70
 
             bg-rr-bg/95
+
             px-4
+
             backdrop-blur-xl
 
             md:px-8
           "
         >
+
           {/* =================================================
-              LEFT HEADER AREA
+              LEFT HEADER
           ================================================== */}
 
           <div className="flex min-w-0 items-center">
-            {/* Mobile title / current page */}
 
-            <div className="ml-12 min-w-0 md:ml-0">
-              <div className="truncate text-sm font-semibold text-rr-text">
-                {getPageTitle(location.pathname)}
+            {/* Mobile page title */}
+
+            <div
+              className="
+                ml-12
+                min-w-0
+                md:ml-0
+              "
+            >
+              <div
+                className="
+                  truncate
+                  text-sm
+                  font-semibold
+                  text-rr-text
+                "
+              >
+                {getPageTitle(
+                  location.pathname
+                )}
               </div>
 
-              <div className="hidden text-[11px] text-rr-dim sm:block">
+              <div
+                className="
+                  hidden
+                  text-[11px]
+                  text-rr-dim
+                  sm:block
+                "
+              >
                 Revenue recovery operations
               </div>
             </div>
+
           </div>
 
+
           {/* =================================================
-              RIGHT HEADER AREA
+              RIGHT HEADER
           ================================================== */}
 
-          <div className="flex items-center gap-2">
+          <div
+            className="
+              flex
+              items-center
+              gap-2
+            "
+          >
+
             {/* ===============================================
                 API STATUS
             ================================================ */}
@@ -219,6 +350,7 @@ export default function AppShell() {
                 gap-2
                 text-xs
                 sm:flex
+
                 ${
                   connected
                     ? 'text-rr-success'
@@ -236,6 +368,7 @@ export default function AppShell() {
                   h-2
                   w-2
                   rounded-full
+
                   ${
                     connected
                       ? 'bg-rr-success'
@@ -251,26 +384,34 @@ export default function AppShell() {
               </span>
             </div>
 
+
             {/* ===============================================
                 SEARCH
             ================================================ */}
 
             <div className="relative">
+
               <button
                 type="button"
                 onClick={() => {
                   setSearchOpen(
                     (value) => !value
                   );
-                  setNotificationsOpen(false);
+
+                  setNotificationsOpen(
+                    false
+                  );
                 }}
                 className={`
                   rounded-xl
                   border
                   border-rr-border
                   bg-rr-surface
+
                   p-2.5
+
                   text-rr-muted
+
                   transition-all
                   duration-300
 
@@ -294,6 +435,7 @@ export default function AppShell() {
                 <Search size={17} />
               </button>
 
+
               {searchOpen && (
                 <div
                   className="
@@ -316,7 +458,8 @@ export default function AppShell() {
                     backdrop-blur-xl
                   "
                 >
-                  {/* Search input */}
+
+                  {/* Search box */}
 
                   <div
                     className="
@@ -348,16 +491,12 @@ export default function AppShell() {
                       }
                       onKeyDown={(event) => {
                         if (
-                          event.key === 'Escape'
-                        ) {
-                          closeOverlays();
-                        }
-
-                        if (
                           event.key === 'Enter' &&
                           results.length > 0
                         ) {
-                          goTo(results[0][1]);
+                          goTo(
+                            results[0][1]
+                          );
                         }
                       }}
                       placeholder="Search workspace..."
@@ -365,6 +504,7 @@ export default function AppShell() {
                         w-full
                         bg-transparent
                         py-2.5
+
                         text-sm
                         text-rr-text
 
@@ -383,8 +523,11 @@ export default function AppShell() {
                         className="
                           rounded-md
                           p-1
+
                           text-rr-dim
+
                           transition
+
                           hover:bg-rr-bg
                           hover:text-rr-text
                         "
@@ -395,17 +538,28 @@ export default function AppShell() {
                     )}
                   </div>
 
+
                   {/* Search results */}
 
-                  <div className="mt-2 max-h-64 overflow-auto">
+                  <div
+                    className="
+                      mt-2
+                      max-h-64
+                      overflow-auto
+                    "
+                  >
                     {results.length > 0 ? (
                       results.map(
-                        ([label, to, Icon]) => (
+                        ([
+                          label,
+                          path,
+                          Icon,
+                        ]) => (
                           <button
-                            key={to}
+                            key={path}
                             type="button"
                             onClick={() =>
-                              goTo(to)
+                              goTo(path)
                             }
                             className="
                               flex
@@ -422,7 +576,6 @@ export default function AppShell() {
                               text-rr-muted
 
                               transition-all
-                              duration-200
 
                               hover:bg-rr-gold/[0.06]
                               hover:text-rr-text
@@ -430,7 +583,10 @@ export default function AppShell() {
                           >
                             <Icon
                               size={15}
-                              className="shrink-0 text-rr-gold"
+                              className="
+                                shrink-0
+                                text-rr-gold
+                              "
                             />
 
                             <span>
@@ -444,6 +600,7 @@ export default function AppShell() {
                         className="
                           px-3
                           py-4
+
                           text-xs
                           text-rr-dim
                         "
@@ -456,26 +613,32 @@ export default function AppShell() {
               )}
             </div>
 
+
             {/* ===============================================
                 NOTIFICATIONS
             ================================================ */}
 
             <div className="relative">
+
               <button
                 type="button"
                 onClick={() => {
                   setNotificationsOpen(
                     (value) => !value
                   );
+
                   setSearchOpen(false);
                 }}
                 className={`
                   relative
+
                   rounded-xl
                   border
                   border-rr-border
                   bg-rr-surface
+
                   p-2.5
+
                   text-rr-muted
 
                   transition-all
@@ -502,8 +665,6 @@ export default function AppShell() {
               >
                 <Bell size={17} />
 
-                {/* Notification indicator */}
-
                 <span
                   className="
                     absolute
@@ -514,12 +675,14 @@ export default function AppShell() {
                     w-1.5
 
                     rounded-full
+
                     bg-rr-gold
 
                     shadow-[0_0_8px_rgba(217,163,83,0.65)]
                   "
                 />
               </button>
+
 
               {notificationsOpen && (
                 <div
@@ -543,23 +706,35 @@ export default function AppShell() {
                     backdrop-blur-xl
                   "
                 >
-                  {/* Header */}
 
                   <div
                     className="
                       flex
                       items-center
                       justify-between
+
                       px-2
                       pb-2
                     "
                   >
                     <div>
-                      <div className="text-sm font-semibold text-rr-text">
+                      <div
+                        className="
+                          text-sm
+                          font-semibold
+                          text-rr-text
+                        "
+                      >
                         Notifications
                       </div>
 
-                      <div className="mt-0.5 text-[11px] text-rr-dim">
+                      <div
+                        className="
+                          mt-0.5
+                          text-[11px]
+                          text-rr-dim
+                        "
+                      >
                         Workspace activity
                       </div>
                     </div>
@@ -578,6 +753,7 @@ export default function AppShell() {
                         text-rr-dim
 
                         transition
+
                         hover:bg-rr-bg
                         hover:text-rr-text
                       "
@@ -587,27 +763,35 @@ export default function AppShell() {
                     </button>
                   </div>
 
-                  {/* API notification */}
+
+                  {/* API status */}
 
                   <div
                     className="
                       mb-2
+
                       rounded-xl
                       border
                       border-rr-border/60
+
                       bg-rr-bg/40
+
                       px-3
                       py-3
                     "
                   >
                     <div className="flex items-start gap-3">
+
                       <span
                         className={`
                           mt-1.5
+
                           h-2
                           w-2
                           shrink-0
+
                           rounded-full
+
                           ${
                             connected
                               ? 'bg-rr-success'
@@ -617,22 +801,36 @@ export default function AppShell() {
                       />
 
                       <div className="min-w-0">
-                        <div className="text-sm text-rr-text">
+
+                        <div
+                          className="
+                            text-sm
+                            text-rr-text
+                          "
+                        >
                           {connected
                             ? 'Backend API is connected.'
                             : 'Backend API is offline.'}
                         </div>
 
-                        <div className="mt-1 text-[11px] text-rr-dim">
+                        <div
+                          className="
+                            mt-1
+                            text-[11px]
+                            text-rr-dim
+                          "
+                        >
                           {connected
                             ? 'Healthy connection'
                             : 'Start the Node API'}
                         </div>
+
                       </div>
                     </div>
                   </div>
 
-                  {/* Static operational notifications */}
+
+                  {/* Notifications */}
 
                   {notifications.map(
                     (notification) => (
@@ -642,9 +840,11 @@ export default function AppShell() {
                         }
                         className="
                           mb-2
+
                           rounded-xl
                           border
                           border-rr-border/60
+
                           bg-rr-bg/40
 
                           px-3
@@ -653,12 +853,27 @@ export default function AppShell() {
                           last:mb-0
                         "
                       >
-                        <div className="text-sm text-rr-text">
-                          {notification.title}
+                        <div
+                          className="
+                            text-sm
+                            text-rr-text
+                          "
+                        >
+                          {
+                            notification.title
+                          }
                         </div>
 
-                        <div className="mt-1 text-[11px] text-rr-dim">
-                          {notification.meta}
+                        <div
+                          className="
+                            mt-1
+                            text-[11px]
+                            text-rr-dim
+                          "
+                        >
+                          {
+                            notification.meta
+                          }
                         </div>
                       </div>
                     )
@@ -667,15 +882,19 @@ export default function AppShell() {
               )}
             </div>
 
+
             {/* ===============================================
-                RAZORRESCUE BRAND
+                HOME / RAZORRESCUE BRAND
             ================================================ */}
 
             <Link
               to="/"
-              onClick={closeOverlays}
+              onClick={
+                closeOverlays
+              }
               className="
                 ml-2
+
                 hidden
                 items-center
                 gap-3
@@ -698,12 +917,25 @@ export default function AppShell() {
               "
               aria-label="Go to RazorRescue home"
             >
+
               <div>
-                <div className="text-sm font-semibold leading-5 text-rr-text">
+                <div
+                  className="
+                    text-sm
+                    font-semibold
+                    leading-5
+                    text-rr-text
+                  "
+                >
                   RazorRescue
                 </div>
 
-                <div className="text-xs text-rr-dim">
+                <div
+                  className="
+                    text-xs
+                    text-rr-dim
+                  "
+                >
                   AI revenue recovery
                 </div>
               </div>
@@ -715,6 +947,7 @@ export default function AppShell() {
                   w-9
                   shrink-0
                   place-items-center
+
                   rounded-full
 
                   bg-gradient-to-br
@@ -733,12 +966,26 @@ export default function AppShell() {
               </div>
             </Link>
 
+
             {/* ===============================================
-                RAZORPAY LOGO
+                RAZORPAY
             ================================================ */}
 
-            <div className="hidden items-center sm:flex">
-              <div className="mx-1 h-6 w-px bg-rr-border/70" />
+            <div
+              className="
+                hidden
+                items-center
+                sm:flex
+              "
+            >
+              <div
+                className="
+                  mx-1
+                  h-6
+                  w-px
+                  bg-rr-border/70
+                "
+              />
 
               <a
                 href="https://razorpay.com"
@@ -750,10 +997,11 @@ export default function AppShell() {
                   gap-2
 
                   rounded-lg
+
                   px-2
                   py-1.5
 
-                  opacity-70
+                  opacity-75
 
                   transition-all
                   duration-300
@@ -767,6 +1015,7 @@ export default function AppShell() {
                 "
                 aria-label="Visit Razorpay"
               >
+
                 <img
                   src="/razorpay-logo.png"
                   alt="Razorpay"
@@ -784,8 +1033,10 @@ export default function AppShell() {
                 />
               </a>
             </div>
+
           </div>
         </header>
+
 
         {/* ===================================================
             PAGE CONTENT
@@ -794,7 +1045,9 @@ export default function AppShell() {
         <section
           className="
             mx-auto
+
             min-h-[calc(100vh-72px)]
+
             w-full
             max-w-[1500px]
 
@@ -807,25 +1060,46 @@ export default function AppShell() {
         >
           <Outlet />
         </section>
+
       </main>
     </div>
   );
 }
 
+
 /* ============================================================
-   PAGE TITLE HELPER
+   PAGE TITLE
 ============================================================ */
 
 function getPageTitle(pathname) {
   const pageTitles = {
-    '/dashboard': 'Dashboard',
-    '/triage': 'Triage Studio',
-    '/batch-recovery': 'Batch Recovery',
-    '/promise-to-pay': 'Promise-to-Pay',
-    '/compliance': 'Compliance',
-    '/audit-ledger': 'Audit Ledger',
-    '/roi-calculator': 'ROI Calculator',
+    '/dashboard':
+      'Dashboard',
+
+    '/triage':
+      'Triage Studio',
+
+    '/batch-recovery':
+      'Batch Recovery',
+
+    '/promise-to-pay':
+      'Promise-to-Pay',
+
+    '/compliance':
+      'Compliance',
+
+    '/audit-ledger':
+      'Audit Ledger',
+
+    '/roi-calculator':
+      'ROI Calculator',
+
+    '/':
+      'RazorRescue',
   };
 
-  return pageTitles[pathname] || 'RazorRescue';
+  return (
+    pageTitles[pathname] ||
+    'RazorRescue'
+  );
 }

@@ -10,6 +10,7 @@ import PromiseToPay from './pages/PromiseToPay';
 import Compliance from './pages/Compliance';
 import AuditLedger from './pages/AuditLedger';
 import ROICalculator from './pages/ROICalculator';
+import RecoveryDemo from './pages/RecoveryDemo';
 
 export default function App() {
   return (
@@ -18,6 +19,11 @@ export default function App() {
       <Route
         path="/"
         element={<Home />}
+      />
+
+      <Route
+        path="/recovery-demo/:transactionId"
+        element={<RecoveryDemo />}
       />
 
       {/* Workspace */}
