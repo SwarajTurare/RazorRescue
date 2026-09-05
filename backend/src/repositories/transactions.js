@@ -1,0 +1,7 @@
+import fs from 'node:fs'; import path from 'node:path'; import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const file=path.resolve(here,'../../../data/failed_payments.csv');
+function parseCSV(text){const rows=[];let row=[],field='',quote=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'){if(quote&&n==='"'){field+='"';i++;}else quote=!quote;}else if(c===','&&!quote){row.push(field);field='';}else if((c==='\n'||c==='\r')&&!quote){if(c==='\r'&&n==='\n')i++;row.push(field);if(row.some(x=>x!=='')){rows.push(row)}row=[];field='';}else field+=c}if(field||row.length){row.push(field);rows.push(row)}const headers=rows.shift().map(x=>x.trim());return rows.map(vals=>Object.fromEntries(headers.map((h,i)=>[h,vals[i]??''])))}
+let cache=null; export function allTransactions(){if(!cache)cache=parseCSV(fs.readFileSync(file,'utf8')).map(r=>({...r,amount:Number(r.amount),gross_margin:Number(r.gross_margin),abandonment_count_30d:Number(r.abandonment_count_30d),attempt_number:Number(r.attempt_number),days_overdue:Number(r.days_overdue)}));return cache;}
+export function findTransaction(id){return allTransactions().find(x=>x.transaction_id===id)}
+export function searchTransactions(q=''){const s=q.toLowerCase();return allTransactions().filter(x=>!s||[x.transaction_id,x.name,x.failure_reason,x.state].some(v=>String(v).toLowerCase().includes(s)))}

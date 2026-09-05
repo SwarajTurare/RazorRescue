@@ -1,0 +1,1 @@
+export default function ChartCard({title,children,aside}){return <div data-motion="fade" className="rr-surface rr-glow rounded-2xl p-4 md:p-5"><div className="mb-4 flex items-center justify-between"><h2 className="text-sm font-semibold">{title}</h2>{aside}</div>{children}</div>}
